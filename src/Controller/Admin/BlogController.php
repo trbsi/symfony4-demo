@@ -79,6 +79,7 @@ class BlogController extends AbstractController
 
         // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
         $form = $this->createForm(PostType::class, $post)
+            ->add('save', SubmitType::class)
             ->add('saveAndCreateNew', SubmitType::class);
 
         $form->handleRequest($request);
@@ -145,7 +146,9 @@ class BlogController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setSlug(Slugger::slugify($post->getTitle()));
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
 
             $this->addFlash('success', 'post.updated_successfully');
 
