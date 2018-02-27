@@ -359,6 +359,46 @@
                 <source>rss.description</source>
                 <target>Most recent posts published on the Symfony Demo blog</target>
             </trans-unit>
+            <trans-unit id="student.city">
+                <source>student.city</source>
+                <target>Add city for a student</target>
+            </trans-unit>
+            <trans-unit id="student.name">
+                <source>student.name</source>
+                <target>Add name for a student</target>
+            </trans-unit>
+            <trans-unit id="student.too_short">
+                <source>student.too_short</source>
+                <target>Student name is too short</target>
+            </trans-unit>
+             <trans-unit id="student.too_long">
+                <source>student.too_long</source>
+                <target>Student name is too long</target>
+            </trans-unit>
+            <trans-unit id="city.name">
+                <source>city.name</source>
+                <target>Add name for a city</target>
+            </trans-unit>
+            <trans-unit id="city.too_short">
+                <source>city.too_short</source>
+                <target>City name is too short</target>
+            </trans-unit>
+             <trans-unit id="city.too_long">
+                <source>city.too_long</source>
+                <target>City name is too long</target>
+            </trans-unit>
+            <trans-unit id="uni.name">
+                <source>uni.name</source>
+                <target>Add name for a uni</target>
+            </trans-unit>
+            <trans-unit id="uni.too_short">
+                <source>uni.too_short</source>
+                <target>Uni name is too short</target>
+            </trans-unit>
+             <trans-unit id="uni.too_long">
+                <source>uni.too_long</source>
+                <target>Uni name is too long</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
