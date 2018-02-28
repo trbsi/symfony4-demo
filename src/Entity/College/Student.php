@@ -135,18 +135,20 @@ class Student
         $this->university = $uni;
     }
 
-    public function addCourse(Course ...$courses): void
+    public function addCourse(Course $course): void
     {
-        foreach ($courses as $key => $course) {
-            if(!$this->courses->contains($course)) {
-                $this->courses->add($course);
-            }
+        if(!$this->courses->contains($course)) {
+            $this->courses->add($course);
+            $course->addStudent($this);
         }
     }
 
     public function removeCourse(Course $course): void 
     {
-        $this->courses->removeElement($course);
+        if($this->courses->contains($course)) {
+            $this->courses->removeElement($course);
+            $course->removeStudent($this);
+        }
     }
 
     public function getCourses(): Collection 

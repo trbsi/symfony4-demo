@@ -98,12 +98,10 @@ class StudentFixtures extends Fixture implements DependentFixtureInterface
             $student->setCity($city->findOneBy(['cityKey' => strtolower($this->cities[array_rand($this->cities)]) ]));
             $student->setUniversity($uni->findOneBy(['uniKey' => strtolower($this->universities[$key]) ]));
             
-            $courses_array = [];
             foreach ($courses[$user->getUsername()] as $key => $value) {
-                $courses_array[] = $course->findOneBy(['courseKey' => $value]);
+                $student->addCourse($course->findOneBy(['courseKey' => $value]));
             }
 
-            $student->addCourse($courses_array);
             $manager->persist($student);
         }
 

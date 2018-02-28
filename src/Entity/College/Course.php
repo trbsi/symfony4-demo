@@ -114,10 +114,19 @@ class Course
         return $this->students;
     }
 
-    public function setStudents(Student $student): void 
+    public function addStudent(Student $student): void 
     {
         if(!$this->students->contains($student)) {
             $this->students->add($student);
+            $student->addCourse($this);
+        }
+    }
+
+    public function removeStudent(Student $student): void 
+    {
+        if($this->students->contains($student)) {
+            $this->students->removeElement($student);
+            $student->removeCourse($this);
         }
     }
 

@@ -105,12 +105,19 @@ class City
         return $this->students;
     }
 
-    public function setStudents(Student $student): void 
+    public function addStudent(Student $student): void 
     {
         $student->setCity($this);
         if(!$this->students->contains($student)) {
             $this->students->add($student);
         }
+    }
+
+    public function removeStudent(Student $student): void 
+    {
+        $student->setCity(null);
+        $this->students->removeElement($student);
+
     }
 
     public function getCreatedAt(): \DateTime
