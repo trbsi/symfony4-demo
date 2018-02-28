@@ -59,10 +59,10 @@ class Student
      * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      * @ORM\JoinTable(name="courses_students_pivot",
      * joinColumns={
-     *     @ORM\JoinColumn(name="student_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="student_id", referencedColumnName="id", onDelete="CASCADE")
      * },
      * inverseJoinColumns={
-     *     @ORM\JoinColumn(name="course_id", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="course_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      * 
      */
