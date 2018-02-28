@@ -69,6 +69,13 @@ class Student
     private $courses;
 
     /**
+     * @var Grade[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Grade", mappedBy="student", cascade={"persist", "remove"}, orphanRemoval=TRUE)
+     */
+    private $grades;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -89,6 +96,7 @@ class Student
         $this->createdAt = new \DateTime;
         $this->updatedAt = new \DateTime;
         $this->courses = new ArrayCollection();
+        $this->grades = new ArrayCollection();
     }
 
 
@@ -127,17 +135,7 @@ class Student
         $this->university = $uni;
     }
 
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function addCourse(array $courses): void
+    public function addCourse(Course ...$courses): void
     {
         foreach ($courses as $key => $course) {
             if(!$this->courses->contains($course)) {
@@ -154,5 +152,36 @@ class Student
     public function getCourses(): Collection 
     {
         return $this->courses;
+    }
+
+    public function getGrades(): Collection
+    {
+        return $this->grades;
+    }
+
+    public function addGrade(Grade $grade): void
+    {
+        if(!$this->grades->contains($grade)) {
+            $this->grades->add($grade);
+            $grade->setStudent($this);
+        }
+    }
+
+    public function removeGrade(Grade $grade): void 
+    {
+        if($this->grades->contains($grade)) {
+            $this->grades->removeElement($grade);
+            $grade->setStudent(null);
+        }
+    }
+
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
     }
 }

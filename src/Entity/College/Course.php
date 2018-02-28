@@ -52,6 +52,13 @@ class Course
     private $students;
 
     /**
+     * @var Grade[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Grade", mappedBy="course", cascade={"persist", "remove"}, orphanRemoval=TRUE)
+     */
+    private $grades;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -72,6 +79,7 @@ class Course
         $this->createdAt = new \DateTime;
         $this->updatedAt = new \DateTime;
         $this->students = new ArrayCollection();
+        $this->grades = new ArrayCollection();
     }
 
 
@@ -101,16 +109,36 @@ class Course
     }
 
 
-    public function getStudents(): Student 
+    public function getStudents(): Collection 
     {
         return $this->students;
     }
 
     public function setStudents(Student $student): void 
     {
-        $student->setCity($this);
         if(!$this->students->contains($student)) {
             $this->students->add($student);
+        }
+    }
+
+    public function getGrades(): Collection
+    {
+        return $this->grades;
+    }
+
+    public function addGrade(Grade $grade): void
+    {
+        if(!$this->grades->contains($grade)) {
+            $this->grades->add($grade);
+            $grade->setCourse($this);
+        }
+    }
+
+    public function removeGrade(Grade $grade):void 
+    {
+        if($this->grades->contains($grade)) {
+            $this->grades->removeElement($grade);
+            $grade->setCourse(null);
         }
     }
 
