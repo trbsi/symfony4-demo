@@ -20,6 +20,7 @@ use App\Entity\College\Student;
 use App\Entity\College\City;
 use App\Entity\College\University;
 use App\Entity\College\Course;
+use App\Entity\College\Grade;
 
 class StudentFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -41,6 +42,32 @@ class StudentFixtures extends Fixture implements DependentFixtureInterface
         $this->loadUniversities($manager);
         $this->loadCourses($manager);
         $this->loadStudents($manager);
+        $this->loadGrades($manager);
+    }
+
+    private function loadGrades($manager)
+    {
+        $qb = $manager->createQueryBuilder();
+        $results = $qb
+        ->select('s')
+        ->from('App\Entity\College\Student', 's')
+        ->getQuery()
+        ->getResult();
+
+        foreach ($results as $key => $user) {
+            foreach ($user->getCourses() as $key => $course) {
+                //insert grades
+                $grade = new Grade();
+                $grade->setGrade(rand(2,5));
+                $user->addGrade($grade);
+                $course->addGrade($grade);
+
+                $manager->flush();
+            }
+        }
+
+        $users = $manager->getRepository(User::class)->findAll();
+        $courses = $manager->getRepository(Course::class)->findAll();
     }
 
     private function loadCourses($manager)
@@ -98,6 +125,7 @@ class StudentFixtures extends Fixture implements DependentFixtureInterface
             $student->setCity($city->findOneBy(['cityKey' => strtolower($this->cities[array_rand($this->cities)]) ]));
             $student->setUniversity($uni->findOneBy(['uniKey' => strtolower($this->universities[$key]) ]));
             
+            //insert into pivot table: courses_students_pivot
             foreach ($courses[$user->getUsername()] as $key => $value) {
                 $student->addCourse($course->findOneBy(['courseKey' => $value]));
             }

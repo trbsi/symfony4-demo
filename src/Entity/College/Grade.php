@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity
@@ -92,6 +93,16 @@ class Grade
     public function setCourse(Course $course): void
     {
         $this->course = $course;
+    }
+
+    public function getGrade(): Grade 
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(int $grade): void
+    {
+        $this->grade = $grade;
     }
 
     public function getCreatedAt(): \DateTime
