@@ -28,7 +28,7 @@ class Grade
      * @var Student
      *
      * @ORM\ManyToOne(targetEntity="Student", inversedBy="grades")
-     * @ORM\JoinColumn(name="student_id", referencedColumnName="id", nullable=FALSE)
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id", nullable=FALSE, onDelete="CASCADE")
      */
     private $student;
 
@@ -36,7 +36,7 @@ class Grade
      * @var Course
      *
      * @ORM\ManyToOne(targetEntity="Course", inversedBy="grades")
-     * @ORM\JoinColumn(name="course_id", referencedColumnName="id", nullable=FALSE)
+     * @ORM\JoinColumn(name="course_id", referencedColumnName="id", nullable=FALSE, onDelete="CASCADE")
      */
     private $course;
 
@@ -85,7 +85,7 @@ class Grade
         $this->student = $student;
     }
 
-    public function getCourse(): Course 
+    public function getCourse(): ?Course 
     {
         return $this->course;
     }
@@ -95,7 +95,7 @@ class Grade
         $this->course = $course;
     }
 
-    public function getGrade(): Grade 
+    public function getGrade(): ?Grade 
     {
         return $this->grade;
     }

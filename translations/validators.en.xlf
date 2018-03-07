@@ -34,6 +34,27 @@
                 <source>comment.is_spam</source>
                 <target>The content of this comment is considered spam.</target>
             </trans-unit>
+            <trans-unit id="student.city">
+                <source>student.city</source>
+                <target>Add city for a student</target>
+            </trans-unit>
+            <trans-unit id="student.name">
+                <source>student.name</source>
+                <target>Add name for a student</target>
+            </trans-unit>
+            <trans-unit id="student.too_short">
+                <source>student.too_short</source>
+                <target>Student name is too short</target>
+            </trans-unit>
+             <trans-unit id="student.too_long">
+                <source>student.too_long</source>
+                <target>Student name is too long</target>
+            </trans-unit>
+             <trans-unit id="should_not_be_blank">
+                <source>should_not_be_blank</source>
+                <target>This should not be blank</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

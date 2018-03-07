@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity
@@ -49,6 +50,7 @@ class Student
     /**
      * @var University
      *
+     * @Assert\NotBlank(message="student.university_not_blank")
      * @ORM\OneToOne(targetEntity="University", inversedBy="student")
      * @ORM\JoinColumn(name="university_id", referencedColumnName="id", nullable=false)
      */
@@ -56,7 +58,10 @@ class Student
 
     /**
      * @var Course
+     *
      * Many Students have Many Courses.
+     * 
+     * @Assert\NotBlank(message="should_not_be_blank")
      * @ORM\ManyToMany(targetEntity="Course", inversedBy="students")
      * @ORM\JoinTable(name="courses_students_pivot",
      * joinColumns={
@@ -106,7 +111,7 @@ class Student
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -116,7 +121,7 @@ class Student
         $this->name = $name;
     }
 
-    public function getCity(): City
+    public function getCity(): ?City
     {
         return $this->city;
     }
@@ -126,7 +131,7 @@ class Student
         $this->city = $city;
     }
 
-    public function getUniversity(): University
+    public function getUniversity(): ?University
     {
         return $this->university;
     }

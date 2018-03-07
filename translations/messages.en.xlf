@@ -359,22 +359,7 @@
                 <source>rss.description</source>
                 <target>Most recent posts published on the Symfony Demo blog</target>
             </trans-unit>
-            <trans-unit id="student.city">
-                <source>student.city</source>
-                <target>Add city for a student</target>
-            </trans-unit>
-            <trans-unit id="student.name">
-                <source>student.name</source>
-                <target>Add name for a student</target>
-            </trans-unit>
-            <trans-unit id="student.too_short">
-                <source>student.too_short</source>
-                <target>Student name is too short</target>
-            </trans-unit>
-             <trans-unit id="student.too_long">
-                <source>student.too_long</source>
-                <target>Student name is too long</target>
-            </trans-unit>
+            
             <trans-unit id="city.name">
                 <source>city.name</source>
                 <target>Add name for a city</target>
@@ -398,6 +383,26 @@
              <trans-unit id="uni.too_long">
                 <source>uni.too_long</source>
                 <target>Uni name is too long</target>
+            </trans-unit>
+            <trans-unit id="label.name">
+                <source>label.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="choose.city">
+                <source>choose.city</source>
+                <target>Choose city</target>
+            </trans-unit>
+            <trans-unit id="student.university_not_blank">
+                <source>student.university_not_blank</source>
+                <target>University should not be blank</target>
+            </trans-unit>
+            <trans-unit id="student.created_successfully">
+                <source>student.created_successfully</source>
+                <target>Student created successfully!</target>
+            </trans-unit>
+            <trans-unit id="label.grade">
+                <source>label.grade</source>
+                <target>Grade</target>
             </trans-unit>
         </body>
     </file>

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'add_student' %}
+
+{% block main %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+	 <div>
+        {{ form_label(form.name) }}
+        {{ form_errors(form.name) }}
+        {{ form_widget(form.name) }}
+    </div>
+
+    <div>
+        {{ form_label(form.city) }}
+        {{ form_errors(form.city) }}
+        {{ form_widget(form.city) }}
+    </div>
+
+    <div>
+        {{ form_label(form.university) }}
+        {{ form_errors(form.university) }}
+        {{ form_widget(form.university) }}
+    </div>
+
+    {# iterate over each existing tag and render its only field: name #}
+    {% for grade in form.grades %}
+        <div>{{ form_row(grade.grade) }}</div>
+        {{ form_errors(grade.grade) }}
+        <div>{{ form_row(grade.course) }}</div>
+        {{ form_errors(grade.course) }}
+        <hr>
+    {% endfor %}
+
+    <div>
+        {{ form_widget(form.save) }}
+    </div>
+
+	{{ form_end(form) }}
+{% endblock %}
