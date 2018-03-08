@@ -11,6 +11,7 @@
             <td>University</td>
             <td>Courses</td>
             <td>Grades</td>
+            <td>Edit</td>
         </tr>
     {% for student in students %}
          <tr>
@@ -30,6 +31,11 @@
                 {% for grade in student.grades %}
                     {{grade.course.name}} ({{grade.grade}}), 
                 {% endfor %}
+            </td>
+            <td>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ url('edit_student', {id: student.id}) }}">Edit student</a>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}

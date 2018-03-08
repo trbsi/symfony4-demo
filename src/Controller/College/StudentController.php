@@ -38,6 +38,8 @@ class StudentController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
         $student = new Student;
         $grade = new Grade;
         $student->getGrades()->add($grade);
@@ -64,5 +66,14 @@ class StudentController extends AbstractController
         [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/edit-student/{id}", name="edit_student")
+     * @Method({"GET", "POST"})
+     */
+    public function edit()
+    {
+
     }
 }
