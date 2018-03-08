@@ -3,6 +3,8 @@
 {% block body_id 'add_student' %}
 
 {% block main %}
+    <a href="{{ url('list_students') }}">List students</a>
+
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 	 <div>
         {{ form_label(form.name) }}

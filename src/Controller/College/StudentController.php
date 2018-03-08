@@ -11,7 +11,7 @@ use App\Entity\College\Grade;
 use App\Entity\College\Course;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-
+use App\Repository\College\StudentRepository;
 
 /**
  *
@@ -21,10 +21,22 @@ use Symfony\Component\HttpFoundation\Request;
 class StudentController extends AbstractController
 {
     /**
+     * @Route("/", name="list_students")
+     * @Method("GET")
+     */
+    public function index(StudentRepository $studentRepository)
+    {
+        return $this->render('college/list_students.html.twig', 
+        [
+            'students' => $studentRepository->findAllStudents()
+        ]);
+    }
+
+    /**
      * @Route("/add-student", name="add_student")
      * @Method({"GET", "POST"})
      */
-    public function index(Request $request): Response
+    public function create(Request $request): Response
     {
         $student = new Student;
         $grade = new Grade;

@@ -95,7 +95,7 @@ class Grade
         $this->course = $course;
     }
 
-    public function getGrade(): ?Grade 
+    public function getGrade(): ?int  
     {
         return $this->grade;
     }
