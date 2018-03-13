@@ -28,6 +28,7 @@ class StudentType extends AbstractType
                 'attr' => ['autofocus' => true],
                 'label' => 'label.name',
             ])
+            //https://symfony.com/doc/current/reference/forms/types/entity.html#basic-usage
             ->add('city', EntityType::class, [
 				    // looks for choices from this entity
 				    'class' => City::class,
@@ -41,6 +42,11 @@ class StudentType extends AbstractType
 				    // uses the University.name property as the visible option string
 				    'choice_label' => 'name',
 			])
+            ->add('courses', EntityType::class, [
+                'class' => Course::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+            ])
             ->add('grades', CollectionType::class, array(
                 'entry_type' => GradeType::class,
                 'entry_options' => array('label' => false),

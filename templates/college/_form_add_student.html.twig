@@ -15,6 +15,13 @@
         {{ form_errors(form.university) }}
         {{ form_widget(form.university) }}
     </div>
+
+     <div>
+        {{ form_label(form.courses) }}
+        {{ form_errors(form.courses) }}
+        {{ form_widget(form.courses) }}
+    </div>
+
     <hr>
 <div class="grades" data-prototype="{{ form_widget(form.grades.vars.prototype)|e('html_attr') }}">
     {# iterate over each existing tag and render its only field: name #}
