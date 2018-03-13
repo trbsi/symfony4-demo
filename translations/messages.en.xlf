@@ -300,6 +300,10 @@
                 <source>post.search_no_results</source>
                 <target>No results found</target>
             </trans-unit>
+            <trans-unit id="student.updated">
+                <source>student.updated</source>
+                <target>Student updated</target>
+            </trans-unit>
 
             <trans-unit id="notification.comment_created">
                 <source>notification.comment_created</source>

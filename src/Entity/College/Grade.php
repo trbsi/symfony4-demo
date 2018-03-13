@@ -35,6 +35,7 @@ class Grade
     /**
      * @var Course
      *
+     * @Assert\NotBlank(message="should_not_be_blank")
      * @ORM\ManyToOne(targetEntity="Course", inversedBy="grades")
      * @ORM\JoinColumn(name="course_id", referencedColumnName="id", nullable=FALSE, onDelete="CASCADE")
      */
@@ -43,6 +44,13 @@ class Grade
     /**
      * @var int
      *
+     *  @Assert\Range(
+     *      min = 1,
+     *      max = 5,
+     *      minMessage = "Min should be {{ limit }}",
+     *      maxMessage = "Max should be {{ limit }} " )
+     * @Assert\Type(type="integer")
+     * @Assert\NotBlank(message="should_not_be_blank")
      * @ORM\Column(type="smallint")
      */
     private $grade;
@@ -80,7 +88,7 @@ class Grade
         return $this->student;
     }
 
-    public function setStudent(Student $student): void
+    public function setStudent(Student $student = null): void
     {
         $this->student = $student;
     }

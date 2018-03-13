@@ -39,12 +39,10 @@ class StudentController extends AbstractController
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        
+
         $student = new Student;
         $grade = new Grade;
-        $student->getGrades()->add($grade);
-        $grade2 = new Grade;
-        $student->getGrades()->add($grade2);
+        $student->addGrade($grade);
 
         $form = $this->createForm(StudentType::class, $student)
         ->add('save', SubmitType::class)
@@ -55,7 +53,6 @@ class StudentController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $grade->setStudent($student);
-            $grade2->setStudent($student);
             $em->persist($student);
             $em->flush();
 
@@ -69,11 +66,31 @@ class StudentController extends AbstractController
     }
 
     /**
-     * @Route("/edit-student/{id}", name="edit_student")
+     * @Route("/edit-student/{id}/edit", requirements={"id": "\d+"}, name="edit_student")
      * @Method({"GET", "POST"})
      */
-    public function edit()
+    public function edit(Request $request, StudentRepository $studentRepository)
     {
+        $student = $studentRepository->getOneStudent($request->get('id'));
+
+        $form = $this->createForm(StudentType::class, $student)
+        ->add('edit', SubmitType::class);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($student);
+            $em->flush();
+
+            $this->addFlash('success', 'student.updated');
+
+            return $this->redirectToRoute('edit_student', ['id' => $student->getId()]);
+        }
+
+        return $this->render('college/edit_student.html.twig', [
+            'form' => $form->createView()
+        ]);
 
     }
 }

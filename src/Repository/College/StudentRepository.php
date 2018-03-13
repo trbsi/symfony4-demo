@@ -37,4 +37,17 @@ class StudentRepository extends ServiceEntityRepository
 
     }
 
+    public function getOneStudent($id)
+    {
+        return $this->createQueryBuilder('s')
+        ->select('s, c, g, u, courses')
+        ->join('s.city', 'c')
+        ->leftJoin('s.grades', 'g')
+        ->join('s.university', 'u')
+        ->leftJoin('s.courses', 'courses')
+        ->where('s.id = :id')
+        ->setParameter('id', $id)
+        ->getQuery()
+        ->getSingleResult();
+    }
 }

@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\College\GradeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class StudentType extends AbstractType
 {
@@ -43,6 +44,11 @@ class StudentType extends AbstractType
             ->add('grades', CollectionType::class, array(
                 'entry_type' => GradeType::class,
                 'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false, 
+                'constraints' => array(new Valid()), //https://stackoverflow.com/a/37813228/1860890
+
             )) 
         ;
     }
