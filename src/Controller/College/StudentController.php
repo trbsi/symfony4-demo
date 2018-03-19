@@ -12,6 +12,7 @@ use App\Entity\College\Course;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\College\StudentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  *
@@ -21,7 +22,7 @@ use App\Repository\College\StudentRepository;
 class StudentController extends AbstractController
 {
     /**
-     * @Route("/", name="list_students")
+     * @Route("", name="list_students")
      * @Method("GET")
      */
     public function index(StudentRepository $studentRepository)
@@ -34,6 +35,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/add-student", name="add_student")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
      */
     public function create(Request $request): Response
@@ -67,6 +69,7 @@ class StudentController extends AbstractController
 
     /**
      * @Route("/edit-student/{id}/edit", requirements={"id": "\d+"}, name="edit_student")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Method({"GET", "POST"})
      */
     public function edit(Request $request, StudentRepository $studentRepository)
@@ -91,6 +94,32 @@ class StudentController extends AbstractController
         return $this->render('college/edit_student.html.twig', [
             'form' => $form->createView()
         ]);
+
+    }
+
+    /**
+     * @Route("/delete/{id}", requirements={"id": "\d+"}, name="delete_student")
+     * @Method("POST")
+     * @return [type] [description]
+     */
+    public function delete($id, Request $request, StudentRepository $studentRepository)
+    {
+        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
+            return $this->redirectToRoute('list_students');
+        }
+
+        /*$result = $this->getDoctrine()
+        ->getRepository(Student::class)
+        ->find($id);*/
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $result = $studentRepository->find($id);
+        $entityManager->remove($result);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Student deleted');
+
+        return $this->redirectToRoute('list_students');
 
     }
 }

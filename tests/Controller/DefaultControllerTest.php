@@ -89,6 +89,7 @@ class DefaultControllerTest extends WebTestCase
         yield ['/'];
         yield ['/en/blog/'];
         yield ['/en/login'];
+        yield ['/en/student'];
     }
 
     public function getSecureUrls()
@@ -97,5 +98,7 @@ class DefaultControllerTest extends WebTestCase
         yield ['/en/admin/post/new'];
         yield ['/en/admin/post/1'];
         yield ['/en/admin/post/1/edit'];
+        yield ['/en/student/add-student'];
+        yield ['/en/student/edit-student/39/edit'];
     }
 }

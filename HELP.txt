@@ -1,5 +1,5 @@
 Validation on CollectionType
 https://stackoverflow.com/a/37813228/1860890
 
-Setter i Gettere iz Symfony Demo
+Setter i Gettere postavi iz Symfony Demo
 Relacije iz http://www.inanzzz.com/index.php/post/6s4g/one-to-many-association-cascade-example-with-doctrine-annotations

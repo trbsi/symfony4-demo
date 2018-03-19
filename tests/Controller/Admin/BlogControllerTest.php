@@ -88,7 +88,7 @@ class BlogControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'kitten',
         ]);
         $crawler = $client->request('GET', '/en/admin/post/new');
-        $form = $crawler->selectButton('Create post')->form([
+        $form = $crawler->selectButton('Save')->form([
             'post[title]' => $postTitle,
             'post[summary]' => $postSummary,
             'post[content]' => $postContent,

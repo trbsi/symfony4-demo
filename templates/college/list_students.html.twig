@@ -33,9 +33,14 @@
                 {% endfor %}
             </td>
             <td>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
                     <a href="{{ url('edit_student', {id: student.id}) }}">Edit student</a>
+                    <form action="{{url('delete_student', {id: student.id})}}" method="POST">
+                         <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                        <button type="submit">DELETE</button>
+                    </form>
                 {% endif %}
+
             </td>
         </tr>
     {% endfor %}

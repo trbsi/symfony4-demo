@@ -7,6 +7,6 @@ class CommentListener
 {
     public function onCommentCreated(GenericEvent $event)
     {
-        dump($event); die;
+      //  dump($event); die;
     }
 }
