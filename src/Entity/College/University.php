@@ -74,7 +74,7 @@ class University
 
     public function getUniKey(): string
     {
-        return $this->getUniKey;
+        return $this->uniKey;
     }
 
     public function setUniKey(string $key): void 

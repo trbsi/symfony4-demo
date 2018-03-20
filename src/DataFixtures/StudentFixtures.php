@@ -65,9 +65,6 @@ class StudentFixtures extends Fixture implements DependentFixtureInterface
                 $manager->flush();
             }
         }
-
-        $users = $manager->getRepository(User::class)->findAll();
-        $courses = $manager->getRepository(Course::class)->findAll();
     }
 
     private function loadCourses($manager)

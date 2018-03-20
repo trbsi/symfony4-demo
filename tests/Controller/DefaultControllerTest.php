@@ -76,6 +76,7 @@ class DefaultControllerTest extends WebTestCase
         $client->request('GET', $url);
 
         $response = $client->getResponse();
+
         $this->assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         $this->assertSame(
             'http://localhost/en/login',

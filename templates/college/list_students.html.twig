@@ -5,14 +5,19 @@
 {% block main %}
     <a href="{{ url('add_student') }}">Add student</a>
     <table class="table" border="1" cellpadding="10" cellspacing="10" width="100%">
+        <thead>
         <tr>
             <td>City</td>
             <td>Name</td>
             <td>University</td>
             <td>Courses</td>
             <td>Grades</td>
+             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
             <td>Edit</td>
+             {% endif %}
         </tr>
+        </thead>
+        <tbody>
     {% for student in students %}
          <tr>
             <td>{{ student.city.name }}</td>
@@ -32,17 +37,20 @@
                     {{grade.course.name}} ({{grade.grade}}), 
                 {% endfor %}
             </td>
-            <td>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+            <td class="edit">
+               
                     <a href="{{ url('edit_student', {id: student.id}) }}">Edit student</a>
-                    <form action="{{url('delete_student', {id: student.id})}}" method="POST">
+                    <form action="{{url('delete_student', {id: student.id})}}" method="POST" class="delete-form">
                          <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
                         <button type="submit">DELETE</button>
                     </form>
-                {% endif %}
+                
 
             </td>
+            {% endif %}
         </tr>
     {% endfor %}
+    </tbody>
     </table>
 {% endblock %}

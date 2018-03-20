@@ -100,6 +100,7 @@ class StudentController extends AbstractController
     /**
      * @Route("/delete/{id}", requirements={"id": "\d+"}, name="delete_student")
      * @Method("POST")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return [type] [description]
      */
     public function delete($id, Request $request, StudentRepository $studentRepository)
