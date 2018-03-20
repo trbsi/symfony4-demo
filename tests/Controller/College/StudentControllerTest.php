@@ -107,13 +107,28 @@ class StudentControllerTest extends WebTestCase
             'student[name]' => 'Ime studenta',
         ]);
 
+        $grades = [5, 2];
+        $courses = [1, 2];
+
         $form['student[city]']->select(1);
         $form['student[university]']->select(4);
         $form['student[courses]']->setValue([1,2]); //https://github.com/symfony/symfony/issues/5562#issuecomment-8748443
-        $form['student[grades][0][grade]'] = 5; 
-        $form['student[grades][0][course]']->select(1);
+        $form['student[grades][0][grade]'] = $grades[0]; 
+        $form['student[grades][0][course]']->select($courses[0]);
 
-        $client->submit($form);
+
+        // gets the raw values
+        $values = $form->getPhpValues();
+
+        // adds fields to the raw values
+        $values['student']['grades'][1]['grade'] = $grades[1];
+        $values['student']['grades'][1]['course'] = $courses[1];
+
+        // submits the form with the existing and new values
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
+        $form->getPhpFiles());
+
+       // $client->submit($form);
 
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
@@ -133,10 +148,10 @@ class StudentControllerTest extends WebTestCase
             $this->assertContains($course_id, $courses);
         }
 
-        //test grades
-        foreach ($student->getGrades() as $grade) {
-            $this->assertSame($grade->getGrade(), 5);
-            $this->assertSame($grade->getCourse()->getId(), 1);
+        //test graddes
+        foreach ($student->getGrades() as $key => $grade) {
+            $this->assertSame($grade->getGrade(), $grades[$key]);
+            $this->assertSame($grade->getCourse()->getId(), $courses[$key]);
         }
     }
 
@@ -148,7 +163,7 @@ class StudentControllerTest extends WebTestCase
         ]);
         $crawler = $client->request('GET', '/en/student');
         $form = $crawler->filter('.delete-form')->first()->form();
-        $client->submit();
+        $client->submit($form);
 
         $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
 
@@ -166,11 +181,34 @@ class StudentControllerTest extends WebTestCase
         $form = $crawler->selectButton('Edit')->form([
             'student[name]' => 'Novi student',
         ]);
-        $client->submit($form);
+        
+        $city = 2;
+        $university = 2;
+        $courses = [2,3];
+        $form['student[city]']->select($city);
+        $form['student[university]']->select($university);
+        $form['student[courses]']->setValue($courses); 
 
-        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        $values = $form->getPhpValues();
+
+        // removes the first tag
+        unset($values['student']['grades'][1]);
+
+        // submits the data
+        $crawler = $client->request($form->getMethod(), $form->getUri(),
+        $values, $form->getPhpFiles());
+
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
         $student = $client->getContainer()->get('doctrine')->getRepository(Student::class)->find(1);
         $this->assertSame('Novi student', $student->getName());
+        $this->assertSame($city, $student->getCity()->getId());
+
+        //only 1 grade is left
+        $this->assertEquals(1, $crawler->filter('.grades > .grade_row')->count());
+
+        //university error, you have chosen the one that exists
+        $this->assertEquals("This value is already used.", trim($crawler->filter('#university span.help-block li')->text()));
+        
     }
 }

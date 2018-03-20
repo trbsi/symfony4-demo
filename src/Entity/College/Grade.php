@@ -98,7 +98,7 @@ class Grade
         return $this->course;
     }
 
-    public function setCourse(Course $course): void
+    public function setCourse(Course $course = null): void
     {
         $this->course = $course;
     }
@@ -108,7 +108,7 @@ class Grade
         return $this->grade;
     }
 
-    public function setGrade(int $grade): void
+    public function setGrade(int $grade = null): void
     {
         $this->grade = $grade;
     }

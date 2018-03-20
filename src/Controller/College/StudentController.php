@@ -88,7 +88,6 @@ class StudentController extends AbstractController
 
             $this->addFlash('success', 'student.updated');
 
-            return $this->redirectToRoute('edit_student', ['id' => $student->getId()]);
         }
 
         return $this->render('college/edit_student.html.twig', [
