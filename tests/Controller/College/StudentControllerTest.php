@@ -207,7 +207,7 @@ class StudentControllerTest extends WebTestCase
         //only 1 grade is left
         $this->assertEquals(1, $crawler->filter('.grades > .grade_row')->count());
 
-        //university error, you have chosen the one that exists
+        //university error, you have chosen the one that's attached to another user
         $this->assertEquals("This value is already used.", trim($crawler->filter('#university span.help-block li')->text()));
         
     }
