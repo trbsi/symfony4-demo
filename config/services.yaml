@@ -38,3 +38,28 @@ services:
     App\CommentListener:
         tags:
             - { name: kernel.event_listener, event: comment.created, method: onCommentCreated }
+
+    Cron\CronBundle\Command\CronCreateCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:create' }
+    Cron\CronBundle\Command\CronDeleteCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:delete' }
+    Cron\CronBundle\Command\CronDisableCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:disable' }
+    Cron\CronBundle\Command\CronEnableCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:enable' }
+    Cron\CronBundle\Command\CronListCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:list' }
+    Cron\CronBundle\Command\CronRunCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:run' }
+    Cron\CronBundle\Command\CronStartCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:start' }
+    Cron\CronBundle\Command\CronStopCommand:
+        tags:
+            - { name: 'console.command', command: 'cron:stop' }
